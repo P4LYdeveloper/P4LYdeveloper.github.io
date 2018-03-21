@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>P4LY Be Happy</title>
+  
+  <subtitle>想”要壮志凌云，“干”要脚踏实地</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://github.com/P4LYdeveloper/"/>
+  <updated>2018-03-21T03:08:07.665Z</updated>
+  <id>https://github.com/P4LYdeveloper/</id>
+  
+  <author>
+    <name>P4LYdeveloper</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android活动Activity详解</title>
+    <link href="https://github.com/P4LYdeveloper/2016/09/26/Android%E6%B4%BB%E5%8A%A8Activity%E7%AE%80%E8%BF%B0/"/>
+    <id>https://github.com/P4LYdeveloper/2016/09/26/Android活动Activity简述/</id>
+    <published>2016-09-26T13:14:57.000Z</published>
+    <updated>2018-03-21T03:08:07.665Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括：</p><h4 id="1、活动状态生命周期"><a href="#1、活动状态生命周期" class="headerlink" title="1、活动状态生命周期"></a>1、活动状态生命周期</h4><h4 id="2、Activity的启动模式"><a href="#2、Activity的启动模式" class="headerlink" title="2、Activity的启动模式"></a>2、Activity的启动模式</h4><h4 id="3、Activity跳转"><a href="#3、Activity跳转" class="headerlink" title="3、Activity跳转"></a>3、Activity跳转</h4><h2 id="活动状态生命周期"><a href="#活动状态生命周期" class="headerlink" title="活动状态生命周期"></a>活动状态生命周期</h2><p>1、每个活动在其生命周期中最多可能会有四种状态:<br>运行状态<br>暂停状态<br>停止状态<br>销毁状态<br>　 1.1，运行状态<br>    当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状态的活动，因为这会带来非常差的用户体验。</p><pre><code>1.2，暂停状态当一个活动不再处于栈顶位置，但仍然可见时，这时活动就进入了暂停状态。比如对话框的形式只会占用屏幕中间的部分区域，你很快就会在后面看到这种活动，处于暂停状态的活动仍然是完全存活的，系统也不愿意去回收这种活动，只有在内存极低的情况下，系统才会去考虑回收这种活动。1.3，停止状态当一个活动不再处于栈顶位置，并且完全不可见的时候，就进入了停止状态。系统仍然会为这种活动保存相应的状态和成员变量，但是这并不是完全可靠的，当其他地方需要内存时，处于停止状态的活动有可能会被系统回收。1.4，销毁状态当一个活动从返回栈中移除后就变成了销毁状态。系统会倾向于回收处于这种状态的活动，从而保证手机的内存充足。</code></pre><p>2、七个方法<br>    Activity类中定义了七个回调方法，覆盖了活动生命周期的每一个环节。有如下七个方法：<br>onCreate()<br>onStart()<br>onResume()<br>onPause()<br>onStop()<br>onDestroy()<br>onRestart()</p><pre><code>onCreate():每个活动中我们都会重写这个方法，它会在活动第一次被创建的时候调用，比如完成一些初始化操作，加载布局、绑定事件等onStart():这个方法在活动不可见变为可见的时候调用onResume():这个方法在活动准备好和用户进行交互的时候调用，此时的活动一定位于返回栈的栈顶、并且处于运行状态。onPause():这个方法在系统准备去启动或者恢复另一个活动的时候调用。我们通常会在这个方法中将一些消耗CPU的资源释放掉，以及保存一些关键数据，但这个方法的执行速度一定要快，不然会影响到新的栈顶活动的使用。onStop():这个方法在活动完全不可见的时候调用。它和onPause()方法主要区别在于，如果启动的新活动是一个对话框式的活动，那么onPause()方法会得到执行，而onStop()方法不会执行。onDestroy():这个方法在活动被销毁之前调用，之后活动的状态将变为销毁状态。onRestart():这个方法在活动由停止状态变为运行状态之前调用，也就是活动被重新启动了。除此之外，活动又可以分为三种生存期</code></pre><p>完整生存期：活动在onCreate()和onDestroy()方法之间所经历的。onCreate方法中完成各种初始化操作，在onDestroy中完成释放内存操作。<br>可见生存期：活动在onStart()和onStop()方法之间所经历的。在此期间可能无法和用户之间交互，可以通过这两个方法合理的管理那些对用户可见资源。比如在onStart中进行资源加载，在onStop中进行资源释放。<br>交互活动期：活动在onResume()和onPause()方法之间所经历的。这期间是用户可以进行交互的，记住onPasue方法中不可进行超时操作，避免ARN或者影响新的活动窗体的正常使用。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041007417342252.png" alt="cmd-markdown-logo"></p><h2 id="活动-Activity-启动模式"><a href="#活动-Activity-启动模式" class="headerlink" title="活动(Activity)启动模式"></a>活动(Activity)启动模式</h2><pre><code>每个活动(Activity)都有一个相应的启动模式，启动模式一共有四种，分别是standard、singleTop、singleTask、singleInstance，可以在AndroidManifest.xml中通过给&lt;activity&gt;标签指定android:launchMode属性来选择启动模式。四种启动模式</code></pre><p>　 2.1，standard<br> 　standard是活动默认的启动模式，在不进行显示指定的情况下，所有活动都会自动使用这种启动模式。对于返回栈，在standard模式下，每当启动一个新的活动，它就会在返回栈中入栈，并处于栈顶的位置。对于standard模式的活动，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建该活动的一个新的实例。<br>    如图：<br>　 <img src="http://images.cnitblog.com/blog/331079/201502/041013585152861.png" alt="cmd-markdown-logo"><br>    2.2，singleTop<br>    除了有standard模式之外，还存在一种叫做singleTop的模式，当活动的启动模式指定为singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041016085932501.png" alt="cmd-markdown-logo"><br>    2.3，singleTask<br>    使用singleTop模式很好地解决重复创建栈活动的问题，可是如果该活动并没有处于栈顶的位置，还是可能会创建多个活动实例的。如果想要让某个活动在整个应用程序的上下文中只存在一个实例呢？可以使用singleTask模式来启动。当活动的启动模式指定为singleTask，每次启动该活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041016410625853.png" alt="cmd-markdown-logo"><br>    2.4，singleInstance<br>    singleInstance模式不同以上三个模式，指定为singleInstance模式的活动会启用一个新的返回栈来管理这个活动。通常应用以下场景，假设我们的程序中有一个活动是允许其他程序调用的，如果我们想实现其他程序和我们的程序可以共享这个活动的实例，那么该如何实现呢？使用前面三种启动模式肯定是做不到的，因为每个应用程序都会有自己的返回栈，同一个活动在不同的返回栈中入栈时必然是创建了新的实例。而使用了singleInstance模式就可以解决这个问题，在这种模式下会有一个单独的返回栈来管理这个活动，不管是哪个应用程序来访问这个活动，都共用的同一个返回栈，也就解决了共享活动实例的问题。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041017398438711.png" alt="cmd-markdown-logo"></p><h2 id="Activity跳转"><a href="#Activity跳转" class="headerlink" title="Activity跳转"></a>Activity跳转</h2><p>UI之间的页面跳转是必不可少的一部分，再次不考虑使用其他的框架，那么需要注意的地方有：</p><ol><li>显隐Intent</li><li>Flag标识</li><li>数据状态保存</li><li>Activity之间数据传递</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括：&lt;/p&gt;
+&lt;h4 id=&quot;1、活动状态生命周期&quot;&gt;&lt;a href=&quot;#1、活动状态生命周期&quot; class=&quot;headerlink&quot; title=&quot;1、活
+      
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="https://github.com/P4LYdeveloper/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高德步行规划，“燃烧XXXkcal能量”</title>
+    <link href="https://github.com/P4LYdeveloper/2016/09/25/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E6%AD%A5%E8%A1%8C%E8%A7%84%E5%88%92%E8%83%BD%E9%87%8F%E6%B6%88%E8%80%97%EF%BC%8C%E2%80%9C%E7%87%83%E7%83%A7XXXkcal%E8%83%BD%E9%87%8F%E2%80%9D%20-%20%E5%89%AF%E6%9C%AC/"/>
+    <id>https://github.com/P4LYdeveloper/2016/09/25/高德地图步行规划能量消耗，“燃烧XXXkcal能量” - 副本/</id>
+    <published>2016-09-25T12:42:03.000Z</published>
+    <updated>2018-03-21T02:16:15.507Z</updated>
+    
+    <content type="html"><![CDATA[<p>通过查找资料，以及各种获取能量的公式和其他网站提供的各种运动的相应能量消耗值。在高德开发者官网有看到相关合作的运动型APP，但是无法获取其中的能量公式计算方式。最终，打开高德APP，选择路线，点击步行，发现其中有能量消耗值，第一反应，是不是高德API中提供这个接口获取能量，搜了一大把，没发现。</p><h2 id="步行规划路线，燃烧XXkcal能量"><a href="#步行规划路线，燃烧XXkcal能量" class="headerlink" title="步行规划路线，燃烧XXkcal能量"></a>步行规划路线，燃烧XXkcal能量</h2><p>通过今天一个小时的折腾，高德APP的步行规划路线中的能量获取方式。通过输入不同的地点，再进而选择步行规划发现。<br>路线距离1.1km消耗能量为56kcal；<br>路线距离10.4km消耗能量为520kcal；</p><blockquote><blockquote><blockquote></blockquote><p>{大致，得出1km消耗的能量为50kcal}</p></blockquote></blockquote><h2 id="大致跟高德地图能量消耗偏差不大"><a href="#大致跟高德地图能量消耗偏差不大" class="headerlink" title="大致跟高德地图能量消耗偏差不大"></a>大致跟高德地图能量消耗偏差不大</h2><p>final int GENERAL_WALKING = 50;//一般的步行能量消耗值</p><p>//distance单位是km<br>public int getWalkingKCal(float distance){<br>    int kcal = (int)(distance*GENERAL_WALKING);<br>    return kcal;<br>}</p><p>//距离的获取方式，在步行规划结果方法中获取<br>final WalkPath walkPath = mWalkRouteResult.getPaths().get(0);<br>if (walkRouteOverlay != null){<br>    walkRouteOverlay.removeFromMap();<br>}</p><p>float dis = walkPath.getDistance();<br>distance = 步行规划路线距离(dis)/1000；</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>高德步行能量消耗值=公里数*50；然后，就可以在步行规划页面显示“燃烧XXXkcal能量”。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;通过查找资料，以及各种获取能量的公式和其他网站提供的各种运动的相应能量消耗值。在高德开发者官网有看到相关合作的运动型APP，但是无法获取其中的能量公式计算方式。最终，打开高德APP，选择路线，点击步行，发现其中有能量消耗值，第一反应，是不是高德API中提供这个接口获取能量，
+      
+    
+    </summary>
+    
+    
+      <category term="燃烧XXXkcal能量" scheme="https://github.com/P4LYdeveloper/tags/%E7%87%83%E7%83%A7XXXkcal%E8%83%BD%E9%87%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo+Github配置以及发布博客</title>
+    <link href="https://github.com/P4LYdeveloper/2016/09/23/Hexo+Github%E9%85%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://github.com/P4LYdeveloper/2016/09/23/Hexo+Github配置以及发布博客/</id>
+    <published>2016-09-23T08:42:03.000Z</published>
+    <updated>2018-03-21T04:18:43.627Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-配置博客config文件"><a href="#1-配置博客config文件" class="headerlink" title="1. 配置博客config文件"></a>1. 配置博客config文件</h2><p> 打开此文件，不要用系统自带记事本打开，容易出现编码不一致问题，最好用 Notepad++ 或 Sublime Text 之类的。</p><p> 下面代码完整，可复制：<br><code># Hexo Configuration</code><br><code>## Docs: https://hexo.io/docs/configuration.html</code><br><code>## Source: https://github.com/hexojs/hexo/</code></p><p><code># Site</code><br><code>title: XXX # 博客名subtitle: XXXX # 副标题description: XXX # 站点描述author: XXX # 作者名language: zh-Hans # 语言设置timezone: Asia/Shanghai</code></p><p><code># URL</code><br><code>## If your site is put in a subdirectory, set url as &#39;http://yoursite.com/child&#39; and root as &#39;/child/&#39;</code><br><code>url: http://lemonxq.cn # 博客所要绑定的域名，没有则不填root: /permalink: :year/:month/:day/:title/permalink_defaults:</code></p><p><code># Directory</code><br><code>source_dir: sourcepublic_dir: publictag_dir: tagsarchive_dir: archivescategory_dir: categoriescode_dir: downloads/codei18n_dir: :langskip_render:</code></p><p><code># Writing</code><br><code>new_post_name: :title.md # File name of new postsdefault_layout: posttitlecase: false # Transform title into titlecaseexternal_link: true # Open external links in new tabfilename_case: 0render_drafts: falsepost_asset_folder: falserelative_link: falsefuture: truehighlight: # Hexo自带代码高亮插件  enable: true  line_number: true  auto_detect: false  tab_replace:</code></p><p><code># Category &amp; Tag</code><br><code>default_category: uncategorizedcategory_map:tag_map:</code></p><p><code># Date / Time format</code><br><code>## Hexo uses Moment.js to parse and display date</code><br><code>## You can customize the date format as defined in</code><br><code>## http://momentjs.com/docs/#/displaying/format/</code><br><code>date_format: YYYY-MM-DDtime_format: HH:mm:ss</code></p><p><code># Pagination</code>## Set per_page to 0 to disable pagination<code></code>per_page: 10 # 每页显示文章数<code></code>pagination_dir: page`</p><p><code># Extensions # 以下为第三方插件设置</code><br><code>## Plugins: https://hexo.io/plugins/</code><br><code>## Themes: https://hexo.io/themes/</code><br><code>theme: next # 使用的主题，主题配置后面讲</code></p><p><code>search: # 本地搜索插件</code><br> <code>path: search.xml</code><br> <code>field: post</code><br> <code>format: html</code><br> <code>limit: 10000</code></p><p><code>feed: # RSS订阅插件  type: atom  path: atom.xml  limit: 0</code></p><p><code>plugins:baidusitemap: # 百度站点地图  path: baidusitemap.xml</code></p><p><code># Deployment # 非常重要的部署设置</code><br><code>## Docs: https://hexo.io/docs/deployment.html</code><br><code>deploy:  type: git  repository: # 可选择同时部署到 GitHub 和 coding 或者只部署到 Github    github: git@github.com:你的GitHub名/你的GitHub名.github.io.git #由于之前配置了ssh，so这里直接配置这个  branch: master</code></p><h2 id="2-配置博客的样式"><a href="#2-配置博客的样式" class="headerlink" title="2. 配置博客的样式"></a>2. 配置博客的样式</h2><p> 在博客根目录的文件，也就是上面的配置中有theme配置，对应这博客目录下的themes目录里头下载的某一个样式，具体的配置百度。<a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">查阅样式</a> <a href="http://blog.csdn.net/u011303443/article/details/52333695" target="_blank" rel="noopener">查阅RSS，不知有啥用</a></p><h2 id="3-发布操作步骤"><a href="#3-发布操作步骤" class="headerlink" title="3. 发布操作步骤"></a>3. 发布操作步骤</h2><p>当确保你的hexo安装成功，而且已经在本地目录也hexo init完毕。</p><h3 id="1、新建文章"><a href="#1、新建文章" class="headerlink" title="1、新建文章"></a>1、新建文章</h3><p>$hexo new post “title”<br>//新文章位置：/source/_posts</p><h3 id="2、编辑文章内容"><a href="#2、编辑文章内容" class="headerlink" title="2、编辑文章内容"></a>2、编辑文章内容</h3><p>使用md编辑器,<a href="https://www.jianshu.com/p/1e402922ee32/" target="_blank" rel="noopener">入门级别</a></p><h3 id="3、本地预览（如果不需要则直接下一步）"><a href="#3、本地预览（如果不需要则直接下一步）" class="headerlink" title="3、本地预览（如果不需要则直接下一步）"></a>3、本地预览（如果不需要则直接下一步）</h3><p>$hexo server//或 hexo s<br>//然后打开浏览器输入localhost:4000可以预览博客效果，用于调试</p><h3 id="4、发布"><a href="#4、发布" class="headerlink" title="4、发布"></a>4、发布</h3><p>$hexo d -g</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="HEXO出现ERROR-Deployer-not-found-git的问题"><a href="#HEXO出现ERROR-Deployer-not-found-git的问题" class="headerlink" title="HEXO出现ERROR Deployer not found: git的问题"></a>HEXO出现ERROR Deployer not found: git的问题</h3><p>deploy的type 的github需要改成git<br>npm install hexo-deployer-git –save</p><h3 id="仓库名规则"><a href="#仓库名规则" class="headerlink" title="仓库名规则"></a>仓库名规则</h3><p>github用户名.github.io</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1-配置博客config文件&quot;&gt;&lt;a href=&quot;#1-配置博客config文件&quot; class=&quot;headerlink&quot; title=&quot;1. 配置博客config文件&quot;&gt;&lt;/a&gt;1. 配置博客config文件&lt;/h2&gt;&lt;p&gt; 打开此文件，不要用系统自带记事本打开，
+      
+    
+    </summary>
+    
+    
+      <category term="hexo github" scheme="https://github.com/P4LYdeveloper/tags/hexo-github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo+Github搭建博客基础</title>
+    <link href="https://github.com/P4LYdeveloper/2016/09/22/Hexo+Github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%9F%BA%E7%A1%80/"/>
+    <id>https://github.com/P4LYdeveloper/2016/09/22/Hexo+Github搭建博客基础/</id>
+    <published>2016-09-22T02:42:03.000Z</published>
+    <updated>2018-03-21T03:48:44.740Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-安装-amp-搭建"><a href="#1-安装-amp-搭建" class="headerlink" title="1. 安装 &amp; 搭建"></a>1. 安装 &amp; 搭建</h2><p> 安装Git：安装后，注册 Github 账号，配置 SSH（具体见下一步）,打开 Git Bash,接下来的命令均在Git Bash中执行<br>安装Node.js<br>安装 Hexo : $npm install -g hexo<br>安装依赖包： $npm install<br>新建博客文件夹：cd到该文件夹，执行$hexo init<br>新建Github仓库：仓库名必须为你的Github名.github.io，要不然就不能使用Github Pages服务了。。。</p><h2 id="2-配置-SSH"><a href="#2-配置-SSH" class="headerlink" title="2. 配置 SSH"></a>2. 配置 SSH</h2><p> 本地生成公钥私钥<br>　$ssh-keygen -t rsa -C “你的邮件地址”<br>添加公钥到 Github<br>根据上一步的提示，找到公钥文件（默认为id_rsa.pub），用记事本打开，全选并复制。<br>登录 Github，右上角 头像 -&gt; Settings —&gt; SSH keys —&gt; Add SSH key。把公钥粘贴到key中，填好title并点击 Add key。<br>git bash中输入命令$ssh -T <a href="mailto:git@github.com">git@github.com</a>，选yes，等待片刻可看到成功提示。</p><h2 id="3-发布"><a href="#3-发布" class="headerlink" title="3. 发布"></a>3. 发布</h2><p>hexo clean<br>hexo d -g</p><h2 id="4-常用命令"><a href="#4-常用命令" class="headerlink" title="4. 常用命令"></a>4. 常用命令</h2><p>生成静态页面：<br>$hexo generate</p><p>本地预览：<br>$hexo server//或 hexo s<br>//然后打开浏览器输入localhost:4000可以预览博客效果，用于调试</p><p>新建文章<br>$hexo new post “title”<br>//新文章位置：/source/_posts</p><p>新建页面<br>$hexo new page “title”</p><p>部署并生成<br>$hexo d -g</p><p>清除生成的文件和缓存<br>$hexo clean</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1-安装-amp-搭建&quot;&gt;&lt;a href=&quot;#1-安装-amp-搭建&quot; class=&quot;headerlink&quot; title=&quot;1. 安装 &amp;amp; 搭建&quot;&gt;&lt;/a&gt;1. 安装 &amp;amp; 搭建&lt;/h2&gt;&lt;p&gt; 安装Git：安装后，注册 Github 账号，配置 S
+      
+    
+    </summary>
+    
+    
+      <category term="hexo github" scheme="https://github.com/P4LYdeveloper/tags/hexo-github/"/>
+    
+  </entry>
+  
+</feed>
