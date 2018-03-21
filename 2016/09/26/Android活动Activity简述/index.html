@@ -99,16 +99,24 @@
 
 
 
-  <meta name="description" content="今天的努力，明天的实力">
-<meta property="og:type" content="website">
-<meta property="og:title" content="P4LY Be Happy">
-<meta property="og:url" content="https://github.com/P4LYdeveloper/index.html">
+  <meta name="description" content="作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括： 1、活动状态生命周期2、Activity的启动模式3、Activity跳转活动状态生命周期1、每个活动在其生命周期中最多可能会有四种状态:运行状态暂停状态停止状态销毁状态　 1.1，运行状态    当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android活动Activity详解">
+<meta property="og:url" content="https://github.com/P4LYdeveloper/2016/09/26/Android活动Activity简述/index.html">
 <meta property="og:site_name" content="P4LY Be Happy">
-<meta property="og:description" content="今天的努力，明天的实力">
+<meta property="og:description" content="作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括： 1、活动状态生命周期2、Activity的启动模式3、Activity跳转活动状态生命周期1、每个活动在其生命周期中最多可能会有四种状态:运行状态暂停状态停止状态销毁状态　 1.1，运行状态    当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://images.cnitblog.com/blog/331079/201502/041007417342252.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/331079/201502/041013585152861.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/331079/201502/041016085932501.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/331079/201502/041016410625853.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/331079/201502/041017398438711.png">
+<meta property="og:updated_time" content="2018-03-21T03:08:07.665Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="P4LY Be Happy">
-<meta name="twitter:description" content="今天的努力，明天的实力">
+<meta name="twitter:title" content="Android活动Activity详解">
+<meta name="twitter:description" content="作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括： 1、活动状态生命周期2、Activity的启动模式3、Activity跳转活动状态生命周期1、每个活动在其生命周期中最多可能会有四种状态:运行状态暂停状态停止状态销毁状态　 1.1，运行状态    当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状">
+<meta name="twitter:image" content="http://images.cnitblog.com/blog/331079/201502/041007417342252.png">
 
 
 
@@ -117,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="https://github.com/P4LYdeveloper/"/>
+  <link rel="canonical" href="https://github.com/P4LYdeveloper/2016/09/26/Android活动Activity简述/"/>
 
 
 
@@ -127,7 +135,7 @@
   };
 </script>
 
-  <title>P4LY Be Happy</title>
+  <title>Android活动Activity详解 | P4LY Be Happy</title>
   
 
 
@@ -174,8 +182,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,9 +280,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -307,9 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/26/Android活动Activity简述/" itemprop="url">Android活动Activity详解</a></h1>
+          <h1 class="post-title" itemprop="name headline">Android活动Activity详解</h1>
         
 
         <div class="post-meta">
@@ -358,9 +363,7 @@
       
 
       
-        
-          
-            <hr>
+        <hr>
 <p>作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括：</p>
 <h4 id="1、活动状态生命周期"><a href="#1、活动状态生命周期" class="headerlink" title="1、活动状态生命周期"></a>1、活动状态生命周期</h4><h4 id="2、Activity的启动模式"><a href="#2、Activity的启动模式" class="headerlink" title="2、Activity的启动模式"></a>2、Activity的启动模式</h4><h4 id="3、Activity跳转"><a href="#3、Activity跳转" class="headerlink" title="3、Activity跳转"></a>3、Activity跳转</h4><h2 id="活动状态生命周期"><a href="#活动状态生命周期" class="headerlink" title="活动状态生命周期"></a>活动状态生命周期</h2><p>1、每个活动在其生命周期中最多可能会有四种状态:<br>运行状态<br>暂停状态<br>停止状态<br>销毁状态<br>　 1.1，运行状态<br>    当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状态的活动，因为这会带来非常差的用户体验。</p>
 <pre><code>1.2，暂停状态
@@ -393,8 +396,6 @@ onRestart():这个方法在活动由停止状态变为运行状态之前调用�
 <li>Activity之间数据传递</li>
 </ol>
 
-          
-        
       
     </div>
 
@@ -412,288 +413,36 @@ onRestart():这个方法在活动由停止状态变为运行状态之前调用�
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/P4LYdeveloper/2016/09/25/简述Hexo搭建博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="P4LYdeveloper">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="P4LY Be Happy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/25/简述Hexo搭建博客/" itemprop="url">高德步行规划，“燃烧XXXkcal能量”</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-25T20:42:03+08:00">2016-09-25</time>
-            
-
-            
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通过查找资料，以及各种获取能量的公式和其他网站提供的各种运动的相应能量消耗值。在高德开发者官网有看到相关合作的运动型APP，但是无法获取其中的能量公式计算方式。最终，打开高德APP，选择路线，点击步行，发现其中有能量消耗值，第一反应，是不是高德API中提供这个接口获取能量，搜了一大把，没发现。</p>
-<h2 id="步行规划路线，燃烧XXkcal能量"><a href="#步行规划路线，燃烧XXkcal能量" class="headerlink" title="步行规划路线，燃烧XXkcal能量"></a>步行规划路线，燃烧XXkcal能量</h2><p>通过今天一个小时的折腾，高德APP的步行规划路线中的能量获取方式。通过输入不同的地点，再进而选择步行规划发现。<br>路线距离1.1km消耗能量为56kcal；<br>路线距离10.4km消耗能量为520kcal；</p>
-<blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<p>{大致，得出1km消耗的能量为50kcal}</p>
-</blockquote>
-</blockquote>
-<h2 id="大致跟高德地图能量消耗偏差不大"><a href="#大致跟高德地图能量消耗偏差不大" class="headerlink" title="大致跟高德地图能量消耗偏差不大"></a>大致跟高德地图能量消耗偏差不大</h2><p>final int GENERAL_WALKING = 50;//一般的步行能量消耗值</p>
-<p>//distance单位是km<br>public int getWalkingKCal(float distance){<br>    int kcal = (int)(distance*GENERAL_WALKING);<br>    return kcal;<br>}</p>
-<p>//距离的获取方式，在步行规划结果方法中获取<br>final WalkPath walkPath = mWalkRouteResult.getPaths().get(0);<br>if (walkRouteOverlay != null){<br>    walkRouteOverlay.removeFromMap();<br>}</p>
-<p>float dis = walkPath.getDistance();<br>distance = 步行规划路线距离(dis)/1000；</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>高德步行能量消耗值=公里数*50；然后，就可以在步行规划页面显示“燃烧XXXkcal能量”。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/P4LYdeveloper/2016/09/25/高德地图步行规划能量消耗，“燃烧XXXkcal能量” - 副本/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="P4LYdeveloper">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="P4LY Be Happy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/25/高德地图步行规划能量消耗，“燃烧XXXkcal能量” - 副本/" itemprop="url">高德步行规划，“燃烧XXXkcal能量”</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-25T20:42:03+08:00">2016-09-25</time>
+              <a href="/2016/09/25/简述Hexo搭建博客/" rel="next" title="高德步行规划，“燃烧XXXkcal能量”">
+                <i class="fa fa-chevron-left"></i> 高德步行规划，“燃烧XXXkcal能量”
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>通过查找资料，以及各种获取能量的公式和其他网站提供的各种运动的相应能量消耗值。在高德开发者官网有看到相关合作的运动型APP，但是无法获取其中的能量公式计算方式。最终，打开高德APP，选择路线，点击步行，发现其中有能量消耗值，第一反应，是不是高德API中提供这个接口获取能量，搜了一大把，没发现。</p>
-<h2 id="步行规划路线，燃烧XXkcal能量"><a href="#步行规划路线，燃烧XXkcal能量" class="headerlink" title="步行规划路线，燃烧XXkcal能量"></a>步行规划路线，燃烧XXkcal能量</h2><p>通过今天一个小时的折腾，高德APP的步行规划路线中的能量获取方式。通过输入不同的地点，再进而选择步行规划发现。<br>路线距离1.1km消耗能量为56kcal；<br>路线距离10.4km消耗能量为520kcal；</p>
-<blockquote>
-<blockquote>
-<blockquote>
-</blockquote>
-<p>{大致，得出1km消耗的能量为50kcal}</p>
-</blockquote>
-</blockquote>
-<h2 id="大致跟高德地图能量消耗偏差不大"><a href="#大致跟高德地图能量消耗偏差不大" class="headerlink" title="大致跟高德地图能量消耗偏差不大"></a>大致跟高德地图能量消耗偏差不大</h2><p>final int GENERAL_WALKING = 50;//一般的步行能量消耗值</p>
-<p>//distance单位是km<br>public int getWalkingKCal(float distance){<br>    int kcal = (int)(distance*GENERAL_WALKING);<br>    return kcal;<br>}</p>
-<p>//距离的获取方式，在步行规划结果方法中获取<br>final WalkPath walkPath = mWalkRouteResult.getPaths().get(0);<br>if (walkRouteOverlay != null){<br>    walkRouteOverlay.removeFromMap();<br>}</p>
-<p>float dis = walkPath.getDistance();<br>distance = 步行规划路线距离(dis)/1000；</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>高德步行能量消耗值=公里数*50；然后，就可以在步行规划页面显示“燃烧XXXkcal能量”。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -703,14 +452,19 @@ onRestart():这个方法在活动由停止状态变为运行状态之前调用�
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -731,8 +485,17 @@ onRestart():这个方法在活动由停止状态变为运行状态之前调用�
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -808,6 +571,22 @@ onRestart():这个方法在活动由停止状态变为运行状态之前调用�
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、活动状态生命周期"><span class="nav-number">1.</span> <span class="nav-text">1、活动状态生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、Activity的启动模式"><span class="nav-number">2.</span> <span class="nav-text">2、Activity的启动模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、Activity跳转"><span class="nav-number">3.</span> <span class="nav-text">3、Activity跳转</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#活动状态生命周期"><span class="nav-number"></span> <span class="nav-text">活动状态生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#活动-Activity-启动模式"><span class="nav-number"></span> <span class="nav-text">活动(Activity)启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity跳转"><span class="nav-number"></span> <span class="nav-text">Activity跳转</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -935,6 +714,10 @@ onRestart():这个方法在活动由停止状态变为运行状态之前调用�
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
 
   
 
