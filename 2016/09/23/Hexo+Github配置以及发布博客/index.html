@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="P4LY Be Happy">
 <meta property="og:description" content="1. 配置博客config文件 打开此文件，不要用系统自带记事本打开，容易出现编码不一致问题，最好用 Notepad++ 或 Sublime Text 之类的。  下面代码完整，可复制：# Hexo Configuration## Docs: https://hexo.io/docs/configuration.html## Source: https://github.com/hexojs/he">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-21T04:18:43.627Z">
+<meta property="og:updated_time" content="2018-03-21T04:53:19.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Github配置以及发布博客">
 <meta name="twitter:description" content="1. 配置博客config文件 打开此文件，不要用系统自带记事本打开，容易出现编码不一致问题，最好用 Notepad++ 或 Sublime Text 之类的。  下面代码完整，可复制：# Hexo Configuration## Docs: https://hexo.io/docs/configuration.html## Source: https://github.com/hexojs/he">
@@ -398,7 +398,7 @@ baidusitemap: # 百度站点地图
   repository: # 可选择同时部署到 GitHub 和 coding 或者只部署到 Github
     github: git@github.com:你的GitHub名/你的GitHub名.github.io.git #由于之前配置了ssh，so这里直接配置这个
   branch: master</code></p>
-<h2 id="2-配置博客的样式"><a href="#2-配置博客的样式" class="headerlink" title="2. 配置博客的样式"></a>2. 配置博客的样式</h2><p> 在博客根目录的文件，也就是上面的配置中有theme配置，对应这博客目录下的themes目录里头下载的某一个样式，具体的配置百度。<a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">查阅样式</a> <a href="http://blog.csdn.net/u011303443/article/details/52333695" target="_blank" rel="noopener">查阅RSS，不知有啥用</a></p>
+<h2 id="2-配置博客的样式"><a href="#2-配置博客的样式" class="headerlink" title="2. 配置博客的样式"></a>2. 配置博客的样式</h2><p> 在博客根目录的文件，也就是上面的配置中有theme配置，对应这博客目录下的themes目录里头下载的某一个样式，具体的配置百度。<a href="http://blog.csdn.net/lemonxq/article/details/72676005" target="_blank" rel="noopener">查阅样式</a> 查阅RSS，不知有啥用</p>
 <h2 id="3-发布操作步骤"><a href="#3-发布操作步骤" class="headerlink" title="3. 发布操作步骤"></a>3. 发布操作步骤</h2><p>当确保你的hexo安装成功，而且已经在本地目录也hexo init完毕。</p>
 <h3 id="1、新建文章"><a href="#1、新建文章" class="headerlink" title="1、新建文章"></a>1、新建文章</h3><p>$hexo new post “title”<br>//新文章位置：/source/_posts</p>
 <h3 id="2、编辑文章内容"><a href="#2、编辑文章内容" class="headerlink" title="2、编辑文章内容"></a>2、编辑文章内容</h3><p>使用md编辑器,<a href="https://www.jianshu.com/p/1e402922ee32/" target="_blank" rel="noopener">入门级别</a></p>
@@ -406,6 +406,10 @@ baidusitemap: # 百度站点地图
 <h3 id="4、发布"><a href="#4、发布" class="headerlink" title="4、发布"></a>4、发布</h3><p>$hexo d -g</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="HEXO出现ERROR-Deployer-not-found-git的问题"><a href="#HEXO出现ERROR-Deployer-not-found-git的问题" class="headerlink" title="HEXO出现ERROR Deployer not found: git的问题"></a>HEXO出现ERROR Deployer not found: git的问题</h3><p>deploy的type 的github需要改成git<br>npm install hexo-deployer-git –save</p>
 <h3 id="仓库名规则"><a href="#仓库名规则" class="headerlink" title="仓库名规则"></a>仓库名规则</h3><p>github用户名.github.io</p>
+<h3 id="配置RSS"><a href="#配置RSS" class="headerlink" title="配置RSS"></a>配置RSS</h3><p>对于给Hexo添加RSS输出的这个需求已经有了一个现成的轮子，名字叫做hexo-generator-feed，使用方法很简单</p>
+<p>首先使用npm安装该插件<br>npm install hexo-generator-feed –save<br>然后在_config.yml中添加配置信息</p>
+<p>feed:<br>  type: atom<br>  path: atom.xml<br>  limit: 20<br>  hub:<br>  content:</p>
+<p>对应的配置项说明<br>type - Feed type. (atom/rss2)<br>​ - Feed类型 (atom/rss2)<br>path - Feed path. (Default: atom.xml/rss2.xml)<br>​ - Feed路径<br>limit - Maximum number of posts in the feed (Use 0 or false to show all posts)<br>​ 在feed中出现的最大文章数（使用0或者false）来显示所有文章<br>hub - URL of the PubSubHubbub hubs (Leave it empty if you don’t use it)<br>​ PubSubHubbub（一种分发/订阅协议）的地址<br>content - (optional) set to ‘true’ to include the contents of the entire post in the feed.<br>​ 当为true时在feed中输出文章全文<br>​ 默认情况下这个插件会读取每篇文章的description属性作为文章摘要，而如果不指定description就会自动截取文章前140个字符作为摘要（但是这个功能对于中文好像有问题，老生长谈）<br>配置好之后运行hexo generate或者直接deploy 就可以找到你博客的feed文件了</p>
 
       
     </div>
@@ -598,7 +602,7 @@ baidusitemap: # 百度站点地图
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-配置博客config文件"><span class="nav-number">1.</span> <span class="nav-text">1. 配置博客config文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-配置博客的样式"><span class="nav-number">2.</span> <span class="nav-text">2. 配置博客的样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-发布操作步骤"><span class="nav-number">3.</span> <span class="nav-text">3. 发布操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、新建文章"><span class="nav-number">3.1.</span> <span class="nav-text">1、新建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、编辑文章内容"><span class="nav-number">3.2.</span> <span class="nav-text">2、编辑文章内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、本地预览（如果不需要则直接下一步）"><span class="nav-number">3.3.</span> <span class="nav-text">3、本地预览（如果不需要则直接下一步）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、发布"><span class="nav-number">3.4.</span> <span class="nav-text">4、发布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HEXO出现ERROR-Deployer-not-found-git的问题"><span class="nav-number">4.1.</span> <span class="nav-text">HEXO出现ERROR Deployer not found: git的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仓库名规则"><span class="nav-number">4.2.</span> <span class="nav-text">仓库名规则</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-配置博客config文件"><span class="nav-number">1.</span> <span class="nav-text">1. 配置博客config文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-配置博客的样式"><span class="nav-number">2.</span> <span class="nav-text">2. 配置博客的样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-发布操作步骤"><span class="nav-number">3.</span> <span class="nav-text">3. 发布操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、新建文章"><span class="nav-number">3.1.</span> <span class="nav-text">1、新建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、编辑文章内容"><span class="nav-number">3.2.</span> <span class="nav-text">2、编辑文章内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、本地预览（如果不需要则直接下一步）"><span class="nav-number">3.3.</span> <span class="nav-text">3、本地预览（如果不需要则直接下一步）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、发布"><span class="nav-number">3.4.</span> <span class="nav-text">4、发布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HEXO出现ERROR-Deployer-not-found-git的问题"><span class="nav-number">4.1.</span> <span class="nav-text">HEXO出现ERROR Deployer not found: git的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仓库名规则"><span class="nav-number">4.2.</span> <span class="nav-text">仓库名规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置RSS"><span class="nav-number">4.3.</span> <span class="nav-text">配置RSS</span></a></li></ol></li></ol></div>
             
 
           </div>
