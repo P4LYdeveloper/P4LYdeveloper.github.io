@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/P4LYdeveloper/"/>
-  <updated>2018-03-21T03:08:07.665Z</updated>
+  <updated>2018-03-22T05:54:14.359Z</updated>
   <id>https://github.com/P4LYdeveloper/</id>
   
   <author>
@@ -17,9 +17,60 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于三方的一些事</title>
+    <link href="https://github.com/P4LYdeveloper/2016/11/26/Android%E5%85%B3%E4%BA%8E%E4%B8%89%E6%96%B9sdk/"/>
+    <id>https://github.com/P4LYdeveloper/2016/11/26/Android关于三方sdk/</id>
+    <published>2016-11-26T14:34:37.000Z</published>
+    <updated>2018-03-22T05:54:14.359Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>##视频通话、语音通话<br>网易云信<br>1、SessionHelper的188行中加入了更多面板的Action事件<br>2、MessageFragment中：</p><p><code>private void parseIntent() {    sessionId = getArguments().getString(Extras.EXTRA_ACCOUNT);    sessionType = (SessionTypeEnum) getArguments().getSerializable(Extras.EXTRA_TYPE);    IMMessage anchor = (IMMessage) getArguments().getSerializable(Extras.EXTRA_ANCHOR);</code></p><p><code>//这里是获取action的地方    customization = (SessionCustomization) getArguments().getSerializable(Extras.EXTRA_CUSTOMIZATION);</code></p><p><code>// 操作面板集合protected List&lt;BaseAction&gt; getActionList() {    List&lt;BaseAction&gt; actions = new ArrayList&lt;&gt;();    actions.add(new ImageAction());//发送图片    actions.add(new VideoAction());//发送视频    actions.add(new LocationAction());//发送位置</code><br>    <code>if (customization != null &amp;&amp; customization.actions != null) {        actions.addAll(customization.actions);    }</code><br>    <code>return actions;</code><br><code>}</code></p><p>来电激活注册页面：</p><p><code>private void initAVChatKit() {    AVChatOptions avChatOptions = new AVChatOptions(){        @Override        public void logout(Context context) {            MainActivity.logout(context, true);        }    };    avChatOptions.entranceActivity = WelcomeActivity.class;    avChatOptions.notificationIconRes = R.drawable.ic_stat_notify_msg;    AVChatKit.init(avChatOptions);</code></p><p>##天气<br>心知sdk<br><a href="https://www.seniverse.com/doc" target="_blank" rel="noopener">https://www.seniverse.com/doc</a></p><p>##短视频<br>Android短视频开发</p><p><a href="https://www.cnblogs.com/qiniu/p/7928920.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiniu/p/7928920.html</a><br><a href="http://blog.csdn.net/android_technology/article/details/69388902" target="_blank" rel="noopener">http://blog.csdn.net/android_technology/article/details/69388902</a></p><p>##推送<br>极光、个推</p><p>##地图<br>高德、百度</p><p>##语音识别<br>科大讯飞、AIUI</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;##视频通话、语音通话&lt;br&gt;网易云信&lt;br&gt;1、SessionHelper的188行中加入了更多面板的Action事件&lt;br&gt;2、MessageFragment中：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;private void parseIntent() {
+    se
+      
+    
+    </summary>
+    
+    
+      <category term="三方sdk" scheme="https://github.com/P4LYdeveloper/tags/%E4%B8%89%E6%96%B9sdk/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Android活动Activity详解</title>
     <link href="https://github.com/P4LYdeveloper/2016/09/26/Android%E6%B4%BB%E5%8A%A8Activity%E7%AE%80%E8%BF%B0/"/>
     <id>https://github.com/P4LYdeveloper/2016/09/26/Android活动Activity简述/</id>
+    <published>2016-09-26T13:14:57.000Z</published>
+    <updated>2018-03-21T03:08:07.665Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括：</p><h4 id="1、活动状态生命周期"><a href="#1、活动状态生命周期" class="headerlink" title="1、活动状态生命周期"></a>1、活动状态生命周期</h4><h4 id="2、Activity的启动模式"><a href="#2、Activity的启动模式" class="headerlink" title="2、Activity的启动模式"></a>2、Activity的启动模式</h4><h4 id="3、Activity跳转"><a href="#3、Activity跳转" class="headerlink" title="3、Activity跳转"></a>3、Activity跳转</h4><h2 id="活动状态生命周期"><a href="#活动状态生命周期" class="headerlink" title="活动状态生命周期"></a>活动状态生命周期</h2><p>1、每个活动在其生命周期中最多可能会有四种状态:<br>运行状态<br>暂停状态<br>停止状态<br>销毁状态<br>　 1.1，运行状态<br>    当一个活动位于返回栈的栈顶时，这时活动就处于运行状态。系统最不愿意回收的就是处于运行状态的活动，因为这会带来非常差的用户体验。</p><pre><code>1.2，暂停状态当一个活动不再处于栈顶位置，但仍然可见时，这时活动就进入了暂停状态。比如对话框的形式只会占用屏幕中间的部分区域，你很快就会在后面看到这种活动，处于暂停状态的活动仍然是完全存活的，系统也不愿意去回收这种活动，只有在内存极低的情况下，系统才会去考虑回收这种活动。1.3，停止状态当一个活动不再处于栈顶位置，并且完全不可见的时候，就进入了停止状态。系统仍然会为这种活动保存相应的状态和成员变量，但是这并不是完全可靠的，当其他地方需要内存时，处于停止状态的活动有可能会被系统回收。1.4，销毁状态当一个活动从返回栈中移除后就变成了销毁状态。系统会倾向于回收处于这种状态的活动，从而保证手机的内存充足。</code></pre><p>2、七个方法<br>    Activity类中定义了七个回调方法，覆盖了活动生命周期的每一个环节。有如下七个方法：<br>onCreate()<br>onStart()<br>onResume()<br>onPause()<br>onStop()<br>onDestroy()<br>onRestart()</p><pre><code>onCreate():每个活动中我们都会重写这个方法，它会在活动第一次被创建的时候调用，比如完成一些初始化操作，加载布局、绑定事件等onStart():这个方法在活动不可见变为可见的时候调用onResume():这个方法在活动准备好和用户进行交互的时候调用，此时的活动一定位于返回栈的栈顶、并且处于运行状态。onPause():这个方法在系统准备去启动或者恢复另一个活动的时候调用。我们通常会在这个方法中将一些消耗CPU的资源释放掉，以及保存一些关键数据，但这个方法的执行速度一定要快，不然会影响到新的栈顶活动的使用。onStop():这个方法在活动完全不可见的时候调用。它和onPause()方法主要区别在于，如果启动的新活动是一个对话框式的活动，那么onPause()方法会得到执行，而onStop()方法不会执行。onDestroy():这个方法在活动被销毁之前调用，之后活动的状态将变为销毁状态。onRestart():这个方法在活动由停止状态变为运行状态之前调用，也就是活动被重新启动了。除此之外，活动又可以分为三种生存期</code></pre><p>完整生存期：活动在onCreate()和onDestroy()方法之间所经历的。onCreate方法中完成各种初始化操作，在onDestroy中完成释放内存操作。<br>可见生存期：活动在onStart()和onStop()方法之间所经历的。在此期间可能无法和用户之间交互，可以通过这两个方法合理的管理那些对用户可见资源。比如在onStart中进行资源加载，在onStop中进行资源释放。<br>交互活动期：活动在onResume()和onPause()方法之间所经历的。这期间是用户可以进行交互的，记住onPasue方法中不可进行超时操作，避免ARN或者影响新的活动窗体的正常使用。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041007417342252.png" alt="cmd-markdown-logo"></p><h2 id="活动-Activity-启动模式"><a href="#活动-Activity-启动模式" class="headerlink" title="活动(Activity)启动模式"></a>活动(Activity)启动模式</h2><pre><code>每个活动(Activity)都有一个相应的启动模式，启动模式一共有四种，分别是standard、singleTop、singleTask、singleInstance，可以在AndroidManifest.xml中通过给&lt;activity&gt;标签指定android:launchMode属性来选择启动模式。四种启动模式</code></pre><p>　 2.1，standard<br> 　standard是活动默认的启动模式，在不进行显示指定的情况下，所有活动都会自动使用这种启动模式。对于返回栈，在standard模式下，每当启动一个新的活动，它就会在返回栈中入栈，并处于栈顶的位置。对于standard模式的活动，系统不会在乎这个活动是否已经在返回栈中存在，每次启动都会创建该活动的一个新的实例。<br>    如图：<br>　 <img src="http://images.cnitblog.com/blog/331079/201502/041013585152861.png" alt="cmd-markdown-logo"><br>    2.2，singleTop<br>    除了有standard模式之外，还存在一种叫做singleTop的模式，当活动的启动模式指定为singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041016085932501.png" alt="cmd-markdown-logo"><br>    2.3，singleTask<br>    使用singleTop模式很好地解决重复创建栈活动的问题，可是如果该活动并没有处于栈顶的位置，还是可能会创建多个活动实例的。如果想要让某个活动在整个应用程序的上下文中只存在一个实例呢？可以使用singleTask模式来启动。当活动的启动模式指定为singleTask，每次启动该活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041016410625853.png" alt="cmd-markdown-logo"><br>    2.4，singleInstance<br>    singleInstance模式不同以上三个模式，指定为singleInstance模式的活动会启用一个新的返回栈来管理这个活动。通常应用以下场景，假设我们的程序中有一个活动是允许其他程序调用的，如果我们想实现其他程序和我们的程序可以共享这个活动的实例，那么该如何实现呢？使用前面三种启动模式肯定是做不到的，因为每个应用程序都会有自己的返回栈，同一个活动在不同的返回栈中入栈时必然是创建了新的实例。而使用了singleInstance模式就可以解决这个问题，在这种模式下会有一个单独的返回栈来管理这个活动，不管是哪个应用程序来访问这个活动，都共用的同一个返回栈，也就解决了共享活动实例的问题。<br>    如图：<br><img src="http://images.cnitblog.com/blog/331079/201502/041017398438711.png" alt="cmd-markdown-logo"></p><h2 id="Activity跳转"><a href="#Activity跳转" class="headerlink" title="Activity跳转"></a>Activity跳转</h2><p>UI之间的页面跳转是必不可少的一部分，再次不考虑使用其他的框架，那么需要注意的地方有：</p><ol><li>显隐Intent</li><li>Flag标识</li><li>数据状态保存</li><li>Activity之间数据传递</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;作为Android中的四大组件之一，特别是对APP层次的应用，Activity是非常重要的。主要从下面几点概括：&lt;/p&gt;
+&lt;h4 id=&quot;1、活动状态生命周期&quot;&gt;&lt;a href=&quot;#1、活动状态生命周期&quot; class=&quot;headerlink&quot; title=&quot;1、活
+      
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="https://github.com/P4LYdeveloper/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android活动Activity详解</title>
+    <link href="https://github.com/P4LYdeveloper/2016/09/26/Android%E6%B4%BB%E5%8A%A8Activity%E7%AE%80%E8%BF%B0%20-%20%E5%89%AF%E6%9C%AC/"/>
+    <id>https://github.com/P4LYdeveloper/2016/09/26/Android活动Activity简述 - 副本/</id>
     <published>2016-09-26T13:14:57.000Z</published>
     <updated>2018-03-21T03:08:07.665Z</updated>
     
