@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/P4LYdeveloper/"/>
-  <updated>2018-03-22T05:54:14.359Z</updated>
+  <updated>2018-03-22T05:57:57.044Z</updated>
   <id>https://github.com/P4LYdeveloper/</id>
   
   <author>
@@ -21,18 +21,16 @@
     <link href="https://github.com/P4LYdeveloper/2016/11/26/Android%E5%85%B3%E4%BA%8E%E4%B8%89%E6%96%B9sdk/"/>
     <id>https://github.com/P4LYdeveloper/2016/11/26/Android关于三方sdk/</id>
     <published>2016-11-26T14:34:37.000Z</published>
-    <updated>2018-03-22T05:54:14.359Z</updated>
+    <updated>2018-03-22T05:57:57.044Z</updated>
     
-    <content type="html"><![CDATA[<hr><p>##视频通话、语音通话<br>网易云信<br>1、SessionHelper的188行中加入了更多面板的Action事件<br>2、MessageFragment中：</p><p><code>private void parseIntent() {    sessionId = getArguments().getString(Extras.EXTRA_ACCOUNT);    sessionType = (SessionTypeEnum) getArguments().getSerializable(Extras.EXTRA_TYPE);    IMMessage anchor = (IMMessage) getArguments().getSerializable(Extras.EXTRA_ANCHOR);</code></p><p><code>//这里是获取action的地方    customization = (SessionCustomization) getArguments().getSerializable(Extras.EXTRA_CUSTOMIZATION);</code></p><p><code>// 操作面板集合protected List&lt;BaseAction&gt; getActionList() {    List&lt;BaseAction&gt; actions = new ArrayList&lt;&gt;();    actions.add(new ImageAction());//发送图片    actions.add(new VideoAction());//发送视频    actions.add(new LocationAction());//发送位置</code><br>    <code>if (customization != null &amp;&amp; customization.actions != null) {        actions.addAll(customization.actions);    }</code><br>    <code>return actions;</code><br><code>}</code></p><p>来电激活注册页面：</p><p><code>private void initAVChatKit() {    AVChatOptions avChatOptions = new AVChatOptions(){        @Override        public void logout(Context context) {            MainActivity.logout(context, true);        }    };    avChatOptions.entranceActivity = WelcomeActivity.class;    avChatOptions.notificationIconRes = R.drawable.ic_stat_notify_msg;    AVChatKit.init(avChatOptions);</code></p><p>##天气<br>心知sdk<br><a href="https://www.seniverse.com/doc" target="_blank" rel="noopener">https://www.seniverse.com/doc</a></p><p>##短视频<br>Android短视频开发</p><p><a href="https://www.cnblogs.com/qiniu/p/7928920.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiniu/p/7928920.html</a><br><a href="http://blog.csdn.net/android_technology/article/details/69388902" target="_blank" rel="noopener">http://blog.csdn.net/android_technology/article/details/69388902</a></p><p>##推送<br>极光、个推</p><p>##地图<br>高德、百度</p><p>##语音识别<br>科大讯飞、AIUI</p>]]></content>
+    <content type="html"><![CDATA[<hr><h2 id="视频通话、语音通话"><a href="#视频通话、语音通话" class="headerlink" title="视频通话、语音通话"></a>视频通话、语音通话</h2><p>网易云信<br>1、SessionHelper的188行中加入了更多面板的Action事件<br>2、MessageFragment中：</p><p><code>private void parseIntent() {    sessionId = getArguments().getString(Extras.EXTRA_ACCOUNT);    sessionType = (SessionTypeEnum) getArguments().getSerializable(Extras.EXTRA_TYPE);    IMMessage anchor = (IMMessage) getArguments().getSerializable(Extras.EXTRA_ANCHOR);</code></p><p><code>//这里是获取action的地方    customization = (SessionCustomization) getArguments().getSerializable(Extras.EXTRA_CUSTOMIZATION);</code></p><p><code>// 操作面板集合protected List&lt;BaseAction&gt; getActionList() {    List&lt;BaseAction&gt; actions = new ArrayList&lt;&gt;();    actions.add(new ImageAction());//发送图片    actions.add(new VideoAction());//发送视频    actions.add(new LocationAction());//发送位置</code><br>    <code>if (customization != null &amp;&amp; customization.actions != null) {        actions.addAll(customization.actions);    }</code><br>    <code>return actions;</code><br><code>}</code></p><p>来电激活注册页面：</p><p><code>private void initAVChatKit() {    AVChatOptions avChatOptions = new AVChatOptions(){        @Override        public void logout(Context context) {            MainActivity.logout(context, true);        }    };    avChatOptions.entranceActivity = WelcomeActivity.class;    avChatOptions.notificationIconRes = R.drawable.ic_stat_notify_msg;    AVChatKit.init(avChatOptions);</code></p><h2 id="天气"><a href="#天气" class="headerlink" title="天气"></a>天气</h2><p>心知sdk<br><a href="https://www.seniverse.com/doc" target="_blank" rel="noopener">https://www.seniverse.com/doc</a></p><h2 id="短视频"><a href="#短视频" class="headerlink" title="短视频"></a>短视频</h2><p>Android短视频开发</p><p><a href="https://www.cnblogs.com/qiniu/p/7928920.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiniu/p/7928920.html</a><br><a href="http://blog.csdn.net/android_technology/article/details/69388902" target="_blank" rel="noopener">http://blog.csdn.net/android_technology/article/details/69388902</a></p><h2 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h2><p>极光、个推</p><h2 id="地图"><a href="#地图" class="headerlink" title="地图"></a>地图</h2><p>高德、百度</p><h2 id="语音识别"><a href="#语音识别" class="headerlink" title="语音识别"></a>语音识别</h2><p>科大讯飞、AIUI</p>]]></content>
     
     <summary type="html">
     
       
       
         &lt;hr&gt;
-&lt;p&gt;##视频通话、语音通话&lt;br&gt;网易云信&lt;br&gt;1、SessionHelper的188行中加入了更多面板的Action事件&lt;br&gt;2、MessageFragment中：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;private void parseIntent() {
-    se
+&lt;h2 id=&quot;视频通话、语音通话&quot;&gt;&lt;a href=&quot;#视频通话、语音通话&quot; class=&quot;headerlink&quot; title=&quot;视频通话、语音通话&quot;&gt;&lt;/a&gt;视频通话、语音通话&lt;/h2&gt;&lt;p&gt;网易云信&lt;br&gt;1、SessionHelper的188行中加入了更多面板的
       
     
     </summary>
