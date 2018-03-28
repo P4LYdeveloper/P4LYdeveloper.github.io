@@ -277,6 +277,212 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/P4LYdeveloper/2017/01/26/Fastjson坑了Android程序员一把/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="P4LYdeveloper">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="P4LY Be Happy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/26/Fastjson坑了Android程序员一把/" itemprop="url">FastJson坑了Android程序员的那些事</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-26T11:34:37+08:00">2017-01-26</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>##接口参数后台只接受大写开头的Key##<br>今天原以为是更新了Android Studio导致的问题，原来不是。问题描述：由于后台提供的接口请求参数是json格式的，而且比较变态，首个字母Key是大写的，然而，实体类封装后，即使变量首个字母是大写，依旧不生效。</p>
+<p>Key的首个字母大写是比较少见的，但是，又是存在的。今天一员工离职，原本属于他的项目，想在丢到我这里来了，其实我比较反感这种项目，又要熟悉代码，以及其他的一些东西，耗时间。而且，还有些许bug，我的去应付。第一个bug即使这个问题，说实话，我也是第一次见Key的首个字母是大写的，也许是后台的编码不跟java的一致吧。后台老是提示“项目类型不对”，就是传给后台的一个Key第一个字母是小写的。然而，百度。<br>大致有以下几种：<br>1、TypeUtils.compatibleWithJavaBean = true;<br>次代码。只对，连续大写的生效，具体代码如下：<br><code>public static List&lt;FieldInfo&gt; computeGetters(Class&lt;?&gt; clazz, Map&lt;String, String&gt; aliasMap, boolean sorted) {
+String propertyName;
+if (Character.isUpperCase(c3)) {
+if (compatibleWithJavaBean) {
+propertyName = Introspector.decapitalize(methodName.substring(3));
+} else {
+propertyName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);
+}
+} else if (c3 == &#39;_&#39;) {
+propertyName = methodName.substring(4);
+} else if (c3 == &#39;f&#39;) {
+propertyName = methodName.substring(3);
+} else {
+continue;
+}}</code><br>在compatibleWithJavaBean为false时直接get对应属性首字母小写，考虑将compatibleWithJavaBean初始化为true，发现<br> <code>public static String decapitalize(String name) {
+    if (name == null || name.length() == 0) {
+        return name;
+    }
+    if (name.length() &gt; 1 &amp;&amp; Character.isUpperCase(name.charAt(1)) &amp;&amp;
+            Character.isUpperCase(name.charAt(0))){
+        return name;
+    }
+    char chars[] = name.toCharArray();
+    chars[0] = Character.toLowerCase(chars[0]);
+    return new String(chars);
+    }</code><br>只能在连续的大写字母情况下才不进行首字母变小写操作。故此方法也不满足要求。<br>So，第一种适合XXyy的款式。<br>2、将实体类的属性public化，并且千万不要有get方法（如果有getX方法）<br>如果设置get方法，此时的生成的json字符串：<br>如果设置了将compatibleWithJavaBean初始化为true：那么是这样的：{“Age”:23,”age”:23,”NAme”:”Ren”}<br>注意，我这里的代码是这样的：<br>  <code>public String NAme;
+    public int Age;
+    public String getNAme() {
+        return NAme;//连续两个大写
+    }
+    public void setNAme(String NAme) {
+        this.NAme = NAme;
+    }
+    public int getAge() {
+        return Age;
+    }
+    public void setAge(int age) {
+        Age = age;
+    }</code><br>    对Age生成了两个，一个“age”,一个”Age”；<br>    没有设置为true，那么是这样的：{“nAme”:”Ren”,”Age”:23,”age”:23,”NAme”:”Ren”}</p>
+<pre><code>去掉get方法则已有一个，也是我们想要的，可以去试试。
+</code></pre><p>然而，这种方式方式，将属性public化，不符合实体类的设计。<br>3、加入FastJson的标签注解<br>    <code>@JSONField(name = &quot;Name&quot;)
+    private String Name;
+    @JSONField(name = &quot;Age&quot;)
+    private int Age;
+    public String getName() {
+        return Name;
+    }
+    public void setName(String name) {
+        Name = name;
+    }
+    public int getAge() {
+        return Age;
+    }
+    public void setAge(int age) {
+        Age = age;
+    }</code><br>将1方案中的值设为true或false没影响。<br>以下是测试代码：<br>        <code>HashMap&lt;String, Object&gt; data = new HashMap&lt;&gt;();
+        data.put(&quot;A&quot;, &quot;23&quot;);
+        data.put(&quot;B&quot;, 23);
+        data.put(&quot;C&quot;, 0.23);
+        List&lt;People&gt; listSe = new ArrayList&lt;&gt;();
+        People p1 = new People();
+        p1.setAge(23);
+        p1.setName(&quot;Ren&quot;);
+        listSe.add(p1);
+        data.put(&quot;Listse&quot;, listSe);
+        List&lt;Animal&gt; listP = new ArrayList&lt;&gt;();
+        Animal a1 = new Animal();
+        a1.setName(&quot;Dog&quot;);
+        a1.setCount(4);
+        a1.setCountry(&quot;America&quot;);
+        Animal a2 = new Animal();
+        a2.setName(&quot;Cat&quot;);
+        a2.setCount(9);
+        a2.setCountry(&quot;China&quot;);
+        listP.add(a1);
+        listP.add(a2);
+        data.put(&quot;Listp&quot;, listP);
+        System.out.println(JSON.toJSON(data));</code></p>
+<pre><code>现在说下坑在何处：源码出至 https://github.com/alibaba/fastjson
+</code></pre><p>在这里可以看到这两个东西,<br>compile ‘com.alibaba:fastjson:1.2.46’<br>compile ‘com.alibaba:fastjson:1.1.68.android’<br>然而，作为Android程序员，都毫不留情的选择了下面方式，so，不管你怎么试用上面的方法都没有用，试着试着想哭。可以看下下面打印的结果：<br>{“A”:”23”,”B”:23,”C”:0.23,”Listp”:[{“count”:4,”country”:”America”,”name”:”Dog”},{“count”:9,”country”:”China”,”name”:”Cat”}],”Listse”:[{“age”:23,”name”:”Ren”}]}<br>[{“age”:23,”name”:”Ren”}]<br>[{“count”:4,”country”:”America”,”name”:”Dog”},{“count”:9,”country”:”China”,”name”:”Cat”}]</p>
+<p>所有实体类转换后的Key都是小写的，当然不排除设置为true（两个连续大写字母的变量）和将变量设置为public的方式（去掉get方法）。第三种方式根本就没一点鸟用，然而，第一种，第二种的方式比较极端，更何况，万一别人需要get方法呢？<br>第三种方式，使用compile ‘com.alibaba:fastjson:1.1.68.android’这个的话实体类首字母大写的问题依旧没解决，将compile ‘com.alibaba:fastjson:1.1.68.android替换为compile ‘com.alibaba:fastjson:1.2.46’。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/P4LYdeveloper/2016/11/26/Android关于三方sdk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1229,7 +1435,7 @@ baidusitemap: # 百度站点地图
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1252,7 +1458,9 @@ baidusitemap: # 百度站点地图
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
