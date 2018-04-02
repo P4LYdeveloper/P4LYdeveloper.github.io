@@ -277,6 +277,139 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/P4LYdeveloper/2017/02/02/Android数据库GreenDao使用简述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="P4LYdeveloper">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="P4LY Be Happy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/02/Android数据库GreenDao使用简述/" itemprop="url">数据库之GreenDao使用简述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-02T22:34:37+08:00">2017-02-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<h1 id="greenDAO简介以及特性"><a href="#greenDAO简介以及特性" class="headerlink" title="greenDAO简介以及特性"></a>greenDAO简介以及特性</h1><p><strong><font size="+1">具体参考官方相应文档以及指导: <a href="http://greenrobot.org/greendao/" target="_blank" rel="noopener">http://greenrobot.org/greendao/</a></font></strong></p>
+<h2 id="加入GreenDao到项目中"><a href="#加入GreenDao到项目中" class="headerlink" title="加入GreenDao到项目中"></a>加入GreenDao到项目中</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在项目根目录下的 build.gradle 文件中:</span></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">        mavenCentral() <span class="comment">// add repository</span></span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath <span class="string">'com.android.tools.build:gradle:2.3.3'</span></span><br><span class="line">        classpath <span class="string">'org.greenrobot:greendao-gradle-plugin:3.2.2'</span> <span class="comment">// 加入GreenDAO插件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//在app根目录下的 build.gradle 文件中:</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.android.application'</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'org.greenrobot.greendao'</span> <span class="comment">// 使用GreenDAO插件</span></span><br><span class="line"> </span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'org.greenrobot:greendao:3.2.2'</span> <span class="comment">//加入GreenDAO依赖库</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greendao &#123;</span><br><span class="line">        schemaVersion <span class="number">1</span> <span class="comment">//数据库版本号</span></span><br><span class="line">        daoPackage <span class="string">'com.XXX.xx.db'</span><span class="comment">// 设置DaoMaster、DaoSession、Dao 包名</span></span><br><span class="line">        targetGenDir <span class="string">'src/main/java'</span><span class="comment">//设置DaoMaster、DaoSession、Dao目录</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//下面是完整的app目录下的biuld.gradle文件</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.android.application'</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'org.greenrobot.greendao'</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    buildToolsVersion <span class="string">'25.0.2'</span></span><br><span class="line">    compileSdkVersion <span class="number">25</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId <span class="string">"您的appId"</span></span><br><span class="line">        minSdkVersion <span class="number">15</span></span><br><span class="line">        targetSdkVersion <span class="number">25</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">"1.0"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greendao &#123;</span><br><span class="line">    schemaVersion <span class="number">1000</span><span class="comment">//数据库版本号</span></span><br><span class="line">    daoPackage <span class="string">'com.XXX.xx.db'</span><span class="comment">// 设置DaoMaster、DaoSession、Dao 包名</span></span><br><span class="line">    targetGenDir <span class="string">'src/main/java'</span><span class="comment">//设置DaoMaster、DaoSession、Dao目录</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile <span class="string">'org.greenrobot:greendao:3.2.2'</span></span><br><span class="line"><span class="comment">//......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他补充：</p>
+<p><a href="http://greenrobot.org/greendao/features/" target="_blank" rel="noopener">Features</a></p>
+<p><a href="http://greenrobot.org/greendao/documentation/updating-to-greendao-3-and-annotations/" target="_blank" rel="noopener">greenDAO 3</a></p>
+<p><a href="http://greenrobot.org/greendao/documentation/" target="_blank" rel="noopener">Documentation</a></p>
+<p><a href="http://greenrobot.org/greendao/changelog/" target="_blank" rel="noopener">Changelog</a></p>
+<p><a href="http://greenrobot.org/greendao/documentation/technical-faq/" target="_blank" rel="noopener">Technical FAQ</a></p>
+<p><a href="http://greenrobot.org/greendao/documentation/faq/" target="_blank" rel="noopener">Non-Technical FAQ</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/P4LYdeveloper/2017/01/28/本地代码提交远程仓库/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1565,7 +1698,7 @@ baidusitemap: # 百度站点地图
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
